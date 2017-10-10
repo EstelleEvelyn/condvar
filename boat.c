@@ -70,6 +70,7 @@ void* childThread(void* args) {
     while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
         pthread_cond_wait(&onMolo, &lock);
       }
+    printf("it's this dumbass");
     boardBoat(KID, MOLO);
     kidsOnBoard++;
     boatCross(MOLO, OAHU);
