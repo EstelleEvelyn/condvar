@@ -64,7 +64,7 @@ void* childThread(void* args) {
       fflush(stdout);
       kidsOnBoard--;
       kidsOahu++;
-      pthread_cond_broadcast(&onOahu);
+      pthread_cond_signal(&onOahu);
     }
   } else {
     boatCross(OAHU, MOLO);
@@ -84,7 +84,7 @@ void* childThread(void* args) {
     leaveBoat(KID, OAHU);
     kidsOnBoard--;
     kidsOahu++;
-    pthread_cond_broadcast(&onOahu);
+    pthread_cond_signal(&onOahu);
   }
 
   /*
@@ -131,7 +131,7 @@ void* adultThread(void* args) {
   lastCrossed = ADULT;
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
-  pthread_cond_broadcast(&onMolo);
+  pthread_cond_signal(&onMolo);
   /*
    * DUMMY CODE - Remove in final solution!
    * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
