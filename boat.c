@@ -80,6 +80,9 @@ void* childThread(void* args) {
     pthread_cond_signal(&onBoat);
     leaveBoat(KID, MOLO);
     kidsOnBoard--;
+    if (kidsOahu == 0 && adultsOahu == 0) {
+      pthread_cond_signal(&onOahu);
+    }
     while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
         pthread_cond_wait(&onMolo, &lock);
       }
