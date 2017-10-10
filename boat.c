@@ -54,7 +54,9 @@ void* childThread(void* args) {
     while (boatLoc == OAHU) {
       pthread_cond_wait(&onBoat, &lock);
     }
-    if(kidsOahu == 0 && adultsOahu == 0) {
+    printf("get kid off");
+    fflush(stdout);
+    if (kidsOahu == 0 && adultsOahu == 0) {
       printf("last kid off");
       fflush(stdout);
       leaveBoat(KID, MOLO);
