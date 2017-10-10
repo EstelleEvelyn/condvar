@@ -55,6 +55,8 @@ void* childThread(void* args) {
       pthread_cond_wait(&onBoat, &lock);
     }
     if(kidsOahu == 0 && adultsOahu == 0) {
+      printf("last kid off");
+      fflush(stdout);
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       pthread_cond_signal(&allDone);
