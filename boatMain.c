@@ -22,7 +22,7 @@ void shuffle(int* intArray, int arrayLen) {
 }
 
 /*
- * program requires 2 command line args: 
+ * program requires 2 command line args:
  * integer number of adults 0-9, integer number of children 2-9
  * optional 3rd arg is 1 for verbose
  */
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 
 	const int total = totNumAdults + totNumKids;
 	int order[total];
-  
+
 	// add desired number of each type of thread to order list
 	int i;
 	for (i=0; i<totNumAdults; i++) {
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 	kidsOahu = 0;
 	adultsOahu = 0;
 	start = 0;
-	
+
 	// now create threads in order indicated by shuffled order array
 	pthread_t peeps[total];
 	for (i=0; i<total; i++) {
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 	printf("\nAll %d adults and %d children on Oahu; crossing may now begin\n", adultsOahu, kidsOahu);
 	start = 1;
 	pthread_cond_broadcast(&mayStart);
-	
+
 	//Wait until everyone has crossed to Molokai (threads may not actually exit, but must update counts)
 	while (kidsOahu > 0 || adultsOahu > 0) {
 	  pthread_cond_wait(&allDone, &lock);
@@ -95,11 +95,12 @@ int main(int argc, char *argv[]) {
 	pthread_mutex_unlock(&lock);
 }
 
-/* print statement for whenever someone gets on the boat 
+/* print statement for whenever someone gets on the boat
  * 1st arg is type of person boarding - CHILD (real value 4) or ADULT (real value 3)
  * 2nd argument is island boat is currently on - OAHU (real value 1) or MOLO (real value 2)
 */
 void boardBoat(int person, int island) {
+  printf("%i, %i\n", kidsOahu, adultsOahu);
   char* pers;
   char* isl;
   if (person == ADULT) pers = "adult";
@@ -114,6 +115,7 @@ void boardBoat(int person, int island) {
  * 2nd argument is island boat is traveling to - OAHU (real value 1) or MOLO (real value 2)
 */
 void boatCross(int from, int to) {
+  printf("%i, %i\n", kidsOahu, adultsOahu);
   char* islFrom;
   char* islTo;
   if (from == OAHU) islFrom = "Oahu";
@@ -123,11 +125,12 @@ void boatCross(int from, int to) {
   printf("boat is rowed across from %s to %s\n", islFrom, islTo);
 }
 
-/* print statement for whenever someone exits the boat 
+/* print statement for whenever someone exits the boat
  * 1st arg is type of person hopping off - CHILD (real value 4) or ADULT (real value 3)
  * 2nd argument is island boat is currently on - OAHU (real value 1) or MOLO (real value 2)
 */
 void leaveBoat(int person, int island) {
+  printf("%i, %i\n", kidsOahu, adultsOahu);
   char* pers;
   char* isl;
   if (person == ADULT) pers = "adult";
