@@ -68,7 +68,7 @@ void* childThread(void* args) {
     pthread_cond_signal(&onBoat);
     leaveBoat(KID, MOLO);
     kidsOnBoard--;
-    while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || adultsOahu == 0) {
+    while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0 || adultsOahu == 0) {
         pthread_cond_wait(&onMolo, &lock);
       }
     boardBoat(KID, MOLO);
@@ -125,8 +125,7 @@ void* adultThread(void* args) {
   lastCrossed = ADULT;
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
-  printf("this adult is gonna give a kid permission to board");
-  pthread_cond_signal(&onMolo);
+  pthread_cond_broadcast(&onMolo);
   pthread_mutex_unlock(&lock);
   /*
    * DUMMY CODE - Remove in final solution!
