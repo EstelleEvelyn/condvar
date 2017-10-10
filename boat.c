@@ -57,6 +57,7 @@ void* childThread(void* args) {
     boatCross(MOLO, OAHU);
     boatLoc = OAHU;
     leaveBoat(KID, OAHU);
+    printf("it's this weirdo");
     kidsOnBoard--;
     kidsOahu++;
     pthread_cond_broadcast(&onOahu);
