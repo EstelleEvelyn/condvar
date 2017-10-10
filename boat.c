@@ -91,7 +91,7 @@ void* childThread(void* args) {
    * KID, ADULT, OAHU, and MOLO are defined in the .h file and should be the only 4
    * possible values for the arguments to the action functions.
    */
-  // boardBoat(KID, OAHU);
+  // boardBoat(KID,   OAHU);
   // boatCross(OAHU, MOLO);
   // leaveBoat(KID, MOLO);
   // kidsOahu--;
@@ -129,7 +129,6 @@ void* adultThread(void* args) {
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
   pthread_cond_broadcast(&onMolo);
-  pthread_mutex_unlock(&lock);
   /*
    * DUMMY CODE - Remove in final solution!
    * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
