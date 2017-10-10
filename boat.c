@@ -78,7 +78,7 @@ void* childThread(void* args) {
     leaveBoat(KID, OAHU);
     kidsOnBoard--;
     kidsOahu++;
-    print("gonna give the adult a boat");
+    printf("gonna give the adult a boat");
     fflush(stdout);
     pthread_cond_broadcast(&onOahu);
     pthread_mutex_unlock(&lock);
