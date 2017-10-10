@@ -115,7 +115,6 @@ void boardBoat(int person, int island) {
  * 2nd argument is island boat is traveling to - OAHU (real value 1) or MOLO (real value 2)
 */
 void boatCross(int from, int to) {
-  printf("%i, %i\n", kidsOahu, adultsOahu);
   char* islFrom;
   char* islTo;
   if (from == OAHU) islFrom = "Oahu";

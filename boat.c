@@ -115,7 +115,6 @@ void* adultThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
 
-  printf("last %i boat %i kids %i adults %i", lastCrossed, boatLoc, kidsOnBoard, adultsOnBoard);
   while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0 || lastCrossed == ADULT) {
     pthread_cond_wait(&onOahu, &lock);
   }
