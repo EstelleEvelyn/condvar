@@ -81,24 +81,9 @@ void* childThread(void* args) {
     kidsOnBoard++;
     boatCross(MOLO, OAHU);
     boatLoc = OAHU;
-    leaveBoat(KID, OAHU);
-    kidsOnBoard--;
     kidsOahu++;
     pthread_cond_signal(&onOahu);
   }
-
-  /*
-   * DUMMY CODE - Remove in final solution!
-   * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
-   * updates Oahu count to show has crossed
-   * KID, ADULT, OAHU, and MOLO are defined in the .h file and should be the only 4
-   * possible values for the arguments to the action functions.
-   */
-  // boardBoat(KID, OAHU);
-  // boatCross(OAHU, MOLO);
-  // leaveBoat(KID, MOLO);
-  // kidsOahu--;
-  /*** end of dummy code ***/
 
   // signals to wake main to check if everyone now across, you may choose to only do
   // this in one of the adult or child threads, as long as eventually both Oahu counts
@@ -132,18 +117,6 @@ void* adultThread(void* args) {
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
   pthread_cond_signal(&onMolo);
-  /*
-   * DUMMY CODE - Remove in final solution!
-   * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
-   * updates Oahu count to show has crossed
-   * KID, ADULT, OAHU, and MOLO are defined in the .h file and should be the only 4
-   * possible values for the arguments to the action functions.
-   */
-  // boardBoat(ADULT, OAHU);
-  // boatCross(OAHU, MOLO);
-  // leaveBoat(ADULT, MOLO);
-  // adultsOahu--;
-  /*** end of dummy code ***/
 
   // signals to wake main to check if everyone now across, you may choose to only do
   // this in one of the adult or child threads, as long as eventually both Oahu counts
