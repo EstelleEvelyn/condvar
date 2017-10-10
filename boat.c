@@ -71,16 +71,14 @@ void* childThread(void* args) {
     while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
         pthread_cond_wait(&onMolo, &lock);
       }
-    if (adultsOahu != 0) {
-      boardBoat(KID, MOLO);
-      kidsOnBoard++;
-      boatCross(MOLO, OAHU);
-      boatLoc = OAHU;
-      leaveBoat(KID, OAHU);
-      kidsOnBoard--;
-      kidsOahu++;
-      pthread_cond_broadcast(&onOahu);
-    }
+    boardBoat(KID, MOLO);
+    kidsOnBoard++;
+    boatCross(MOLO, OAHU);
+    boatLoc = OAHU;
+    leaveBoat(KID, OAHU);
+    kidsOnBoard--;
+    kidsOahu++;
+    pthread_cond_broadcast(&onOahu);
     pthread_mutex_unlock(&lock);
   }
 
