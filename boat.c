@@ -81,6 +81,8 @@ void* childThread(void* args) {
     pthread_cond_broadcast(&onOahu);
     pthread_mutex_unlock(&lock);
   }
+  pthread_cond_broadcast(&onOahu);
+
 
   /*
    * DUMMY CODE - Remove in final solution!
