@@ -125,6 +125,7 @@ void* adultThread(void* args) {
   lastCrossed = ADULT;
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
+  printf("loc:%i, last:%i, aOB: %i, kOB, %i, aoO:%i", boatLoc, lastCrossed, adultsOnBoard, kidsOnBoard, adultsOahu);
   pthread_cond_broadcast(&onMolo);
   pthread_mutex_unlock(&lock);
   /*
