@@ -121,7 +121,7 @@ void* adultThread(void* args) {
   adultsOnBoard++;
   adultsOahu--;
   boatCross(OAHU, MOLO);
-  boatLoc == MOLO;
+  boatLoc = MOLO;
   lastCrossed = ADULT;
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
