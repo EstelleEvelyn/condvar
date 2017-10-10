@@ -44,7 +44,7 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
 
-  while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || lastCrossed == KID) {
+  while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || (lastCrossed == KID && adultsOahu != 0)) {
     pthread_cond_wait(&onOahu, &lock);
   }
   boardBoat(KID, OAHU);
@@ -63,27 +63,27 @@ void* childThread(void* args) {
     pthread_mutex_unlock(&lock);
   } else {
     boatCross(OAHU, MOLO);
-    if (adultsOahu != 0) {
-      lastCrossed = KID;
-    }
+    lastCrossed = KID;
     boatLoc = MOLO;
     pthread_cond_signal(&onBoat);
     leaveBoat(KID, MOLO);
     kidsOnBoard--;
-    while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0 || adultsOahu == 0) {
+    while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
         pthread_cond_wait(&onMolo, &lock);
       }
-    boardBoat(KID, MOLO);
-    kidsOnBoard++;
-    boatCross(MOLO, OAHU);
-    boatLoc = OAHU;
-    leaveBoat(KID, OAHU);
-    kidsOnBoard--;
-    kidsOahu++;
-    fflush(stdout);
-    pthread_cond_broadcast(&onOahu);
+    if (adultsOahu != 0) {
+      boardBoat(KID, MOLO);
+      kidsOnBoard++;
+      boatCross(MOLO, OAHU);
+      boatLoc = OAHU;
+      leaveBoat(KID, OAHU);
+      kidsOnBoard--;
+      kidsOahu++;
+      pthread_cond_broadcast(&onOahu);
+    }
     pthread_mutex_unlock(&lock);
   }
+
   /*
    * DUMMY CODE - Remove in final solution!
    * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
@@ -91,7 +91,7 @@ void* childThread(void* args) {
    * KID, ADULT, OAHU, and MOLO are defined in the .h file and should be the only 4
    * possible values for the arguments to the action functions.
    */
-  // boardBoat(KID,   OAHU);
+  // boardBoat(KID, OAHU);
   // boatCross(OAHU, MOLO);
   // leaveBoat(KID, MOLO);
   // kidsOahu--;
@@ -129,6 +129,7 @@ void* adultThread(void* args) {
   leaveBoat(ADULT, MOLO);
   adultsOnBoard--;
   pthread_cond_broadcast(&onMolo);
+  pthread_mutex_unlock(&lock);
   /*
    * DUMMY CODE - Remove in final solution!
    * adult rows self to Molokai, boat magically returns (or there are infinite boats available)
