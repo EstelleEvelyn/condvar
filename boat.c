@@ -59,7 +59,7 @@ void* childThread(void* args) {
     leaveBoat(KID, OAHU);
     kidsOnBoard--;
     kidsOahu++;
-    pthread_cond_signal(&onOahu);
+    pthread_cond_broadcast(&onOahu);
     pthread_mutex_unlock(&lock);
   } else {
     boatCross(OAHU, MOLO);
@@ -78,7 +78,9 @@ void* childThread(void* args) {
     leaveBoat(KID, OAHU);
     kidsOnBoard--;
     kidsOahu++;
-    pthread_cond_signal(&onOahu);
+    print("gonna give the adult a boat");
+    fflush(stdout);
+    pthread_cond_broadcast(&onOahu);
     pthread_mutex_unlock(&lock);
   }
   /*
