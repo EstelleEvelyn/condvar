@@ -9,23 +9,28 @@
 #include <time.h>
 #include "boat.h"
 
+
+pthread_cond_t onOahu;
+pthread_cond_t onBoat;
+pthread_cond_t onMolo;
+int boatLoc;
+int kidsOnBoard;
+int adultsOnBoard;
+int lastCrossed;
+
 void init() {
   /* Initialize mutex and condition variable objects */
   pthread_mutex_init(&lock, NULL);
   pthread_cond_init(&allReady, NULL);
   pthread_cond_init(&mayStart, NULL);
   pthread_cond_init(&allDone, NULL);
-  pthread_cond_t onOahu;
-  pthread_cond_t onBoat;
-  pthread_cond_t onMolo;
   pthread_cond_init(&onOahu, NULL);
   pthread_cond_init(&onBoat, NULL);
   pthread_cond_init(&onMolo, NULL);
-  int boatLoc;
-  int kidsOnBoard;
-  int adultsOnBoard;
-  int lastCrossed;
-
+  boatLoc = OAHU;
+  lastCrossed = ADULT;
+  kidsOnBoard = 0;
+  adultsOnBoard = 0;
 }
 
 void* childThread(void* args) {
