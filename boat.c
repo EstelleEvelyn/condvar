@@ -69,10 +69,10 @@ void* childThread(void* args) {
     leaveBoat(KID, MOLO);
     kidsOnBoard--;
     while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || adultsOahu == 0) {
+        printf("Waiting to board");
+        fflush(stdout);
         pthread_cond_wait(&onMolo, &lock);
       }
-    printf("Think this kid'll board?");
-    fflush(stdout);
     boardBoat(KID, MOLO);
     kidsOnBoard++;
     boatCross(MOLO, OAHU);
