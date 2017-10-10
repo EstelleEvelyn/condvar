@@ -60,10 +60,11 @@ void* childThread(void* args) {
     } else {
       boatCross(MOLO, OAHU);
       boatLoc = OAHU;
-      leaveBoat(KID, OAHU);
-      fflush(stdout);
-      kidsOnBoard--;
-      kidsOahu++;
+      if (adultsOahu != 0) {
+        leaveBoat(KID, OAHU);
+        kidsOnBoard--;
+        kidsOahu++;
+      }
       pthread_cond_signal(&onOahu);
     }
   } else {
@@ -81,11 +82,9 @@ void* childThread(void* args) {
     kidsOnBoard++;
     boatCross(MOLO, OAHU);
     boatLoc = OAHU;
-    if(adultsOahu != 0) {
-      leaveBoat(KID, OAHU);
-      kidsOnBoard--;
-      kidsOahu++;
-    }
+    leaveBoat(KID, OAHU);
+    kidsOnBoard--;
+    kidsOahu++;
     pthread_cond_signal(&onOahu);
   }
 
