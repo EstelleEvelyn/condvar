@@ -14,10 +14,13 @@ void init() {
   pthread_mutex_init(&lock, NULL);
   pthread_cond_init(&allReady, NULL);
   pthread_cond_init(&mayStart, NULL);
+  pthread_cond_init(&allDone, NULL);
+  pthread_cond_t onOahu;
+  pthread_cond_t onBoat;
+  pthread_cond_t onMolo;
   pthread_cond_init(&onOahu, NULL);
   pthread_cond_init(&onBoat, NULL);
   pthread_cond_init(&onMolo, NULL);
-  pthread_cond_init(&allDone, NULL);
   int boatLoc;
   int kidsOnBoard;
   int adultsOnBoard;
