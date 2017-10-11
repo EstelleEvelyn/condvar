@@ -89,28 +89,36 @@ void* childThread(void* args) {
     }
     printf("just the kiddos now\n");
     fflush(stdout);
-    while(boatLoc == MOLO || kidsOnBoard > 1) {
+    while(boatLoc == MOLO || kidsOnBoard > 1 || kidsOahu == 0) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
     boardBoat(KID, OAHU);
     kidsOahu--;
     kidsOnBoard++;
     if(kidsOnBoard == 1) {
+      if(kidsOahu == 0) {
+      boatCross(OAHU, MOLO);
+      boatLoc = MOLO;
+      leaveBoat(KID, MOLO);
+      kidsOnBoard--;
+      pthread_cond_signal(&allDone);
+    } else {
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
       }
-      if (kidsOahu != 0) {
+      if(kidsOahu != 0) {
         boatCross(MOLO, OAHU);
         boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
         kidsOahu++;
         pthread_cond_signal(&kidsBoardOahu);
-        pthread_mutex_unlock(&lock);
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
         pthread_cond_signal(&allDone);
+      }
+      pthread_mutex_unlock(&lock);
       }
     } else {
       boatCross(OAHU, MOLO);
