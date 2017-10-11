@@ -143,6 +143,7 @@ void* adultThread(void* args) {
   }
 
   printf("a grown up is gonna go");
+  printf("kids on board");
   fflush(stdout);
   while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0 || adultGoes == 0) {
     pthread_cond_wait(&adultBoardOahu, &lock);
