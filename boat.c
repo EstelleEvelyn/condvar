@@ -43,58 +43,54 @@ void* childThread(void* args) {
   while (!start) {
     pthread_cond_wait(&mayStart, &lock);
   }
-
-  while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || (lastCrossed == KID && adultsOahu != 0)) {
-    pthread_cond_wait(&onOahu, &lock);
-  }
-  boardBoat(KID, OAHU);
-  kidsOahu--;
-  kidsOnBoard++;
-  if (kidsOnBoard == 1) {
-    while (boatLoc == OAHU) {
-      pthread_cond_wait(&onBoat, &lock);
+  while(kidsOahu != 0) {
+    while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || (lastCrossed == KID && adultsOahu != 0)) {
+      pthread_cond_wait(&onOahu, &lock);
     }
-    printf("get kid off");
-    fflush(stdout);
-    if (kidsOahu == 0 && adultsOahu == 0) {
-      printf("last kid off");
-      fflush(stdout);
+    boardBoat(KID, OAHU);
+    kidsOahu--;
+    kidsOnBoard++;
+    if (kidsOnBoard == 1) {
+      while (boatLoc == OAHU) {
+        pthread_cond_wait(&onBoat, &lock);
+      }
+      if (kidsOahu == 0 && adultsOahu == 0) {
+        leaveBoat(KID, MOLO);
+        kidsOnBoard--;
+        pthread_cond_signal(&allDone);
+        pthread_mutex_unlock(&lock);
+      } else {
+        boatCross(MOLO, OAHU);
+        boatLoc = OAHU;
+        if (adultsOahu != 0) {
+          leaveBoat(KID, OAHU);
+          kidsOnBoard--;
+          kidsOahu++;
+        }
+        pthread_cond_signal(&onOahu);
+      }
+    } else {
+      boatCross(OAHU, MOLO);
+      lastCrossed = KID;
+      boatLoc = MOLO;
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
-      pthread_cond_signal(&allDone);
-      pthread_mutex_unlock(&lock);
-    } else {
+      pthread_cond_signal(&onBoat);
+      if (kidsOahu == 0 && adultsOahu == 0) {
+        pthread_cond_signal(&onOahu);
+      }
+      while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
+          pthread_cond_wait(&onMolo, &lock);
+        }
+      boardBoat(KID, MOLO);
+      kidsOnBoard++;
       boatCross(MOLO, OAHU);
       boatLoc = OAHU;
-      if (adultsOahu != 0) {
-        leaveBoat(KID, OAHU);
-        kidsOnBoard--;
-        kidsOahu++;
-      }
+      leaveBoat(KID, OAHU);
+      kidsOnBoard--;
+      kidsOahu++;
       pthread_cond_signal(&onOahu);
     }
-  } else {
-    boatCross(OAHU, MOLO);
-    lastCrossed = KID;
-    boatLoc = MOLO;
-    pthread_cond_signal(&onBoat);
-    leaveBoat(KID, MOLO);
-    kidsOnBoard--;
-    if (kidsOahu == 0 && adultsOahu == 0) {
-      pthread_cond_signal(&onOahu);
-    }
-    while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
-        pthread_cond_wait(&onMolo, &lock);
-      }
-
-    boardBoat(KID, MOLO);
-    kidsOnBoard++;
-    boatCross(MOLO, OAHU);
-    boatLoc = OAHU;
-    leaveBoat(KID, OAHU);
-    kidsOnBoard--;
-    kidsOahu++;
-    pthread_cond_signal(&onOahu);
   }
 
   // signals to wake main to check if everyone now across, you may choose to only do
