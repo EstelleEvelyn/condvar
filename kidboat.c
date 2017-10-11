@@ -83,3 +83,7 @@ void* childThread(void* args) {
 
   return NULL;
 }
+
+void *adultThread(void* args) {
+  return NULL;
+}
