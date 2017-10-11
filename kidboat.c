@@ -53,7 +53,7 @@ void* childThread(void* args) {
     printf("current kids on board: %i\n", kidsOnBoard);
     fflush(stdout);
     if(kidsOnBoard == 1) {
-      nextBatch = 0
+      nextBatch = 0;
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
       }
