@@ -90,9 +90,9 @@ void* childThread(void* args) {
     while(boatLoc == MOLO || kidsOnBoard > 1 || kidsOahu == 0) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    boardBoat(KID, OAHU);
-    printf("that one boarded from the kid loop");
+    printf("Loc: %i, aboard: %i, island: %i", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
+    boardBoat(KID, OAHU);
     kidsOahu--;
     kidsOnBoard++;
     if(kidsOnBoard == 1) {
