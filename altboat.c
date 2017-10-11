@@ -45,6 +45,8 @@ void* childThread(void* args) {
   }
   while(kidsOahu != 0) {
     while(adultsOahu != 0) {
+      printf("adults n kids");
+      fflush(stdout);
       while(boatLoc == MOLO || kidsOnBoard > 1 || adultsOnBoard > 0) {
         pthread_cond_wait(&kidsBoardOahu, &lock);
       }
@@ -82,6 +84,8 @@ void* childThread(void* args) {
         pthread_mutex_unlock(&lock);
       }
     }
+    printf("just the kiddos now");
+    fflush(stdout);
     while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
@@ -135,6 +139,8 @@ void* adultThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
 
+  printf("a grown up is gonna go");
+  fflush(stdout);
   while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0) {
     pthread_cond_wait(&adultBoardOahu, &lock);
   }
