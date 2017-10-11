@@ -66,9 +66,13 @@ void* childThread(void* args) {
         lastCrossed = KID;
         boatLoc = MOLO;
         leaveBoat(KID, MOLO);
+        printf("got off");
+        fflush(stdout);
         kidsOnBoard--;
         pthread_cond_signal(&onBoat);
         if(adultsOahu != 0) {
+          printf("there are stil adler");
+          fflush(stdout);
           while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
               pthread_cond_wait(&onMolo, &lock);
           }
@@ -92,8 +96,6 @@ void* childThread(void* args) {
         }
         if(kidsOahu == 0) {
           leaveBoat(KID, MOLO);
-          printf("got off");
-          fflush(stdout);
           pthread_cond_signal(&allDone);
         }
         boatCross(MOLO, OAHU);
@@ -105,8 +107,6 @@ void* childThread(void* args) {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
         pthread_cond_signal(&onBoat);
-        printf("signaled back");
-        fflush(stdout);
       }
     }
   }
