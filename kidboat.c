@@ -70,6 +70,8 @@ void* childThread(void* args) {
       boatLoc = MOLO;
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
+      printf("current kids on board: %i", kidsOnBoard);
+      fflush(stdout);
       pthread_cond_signal(&onBoat);
       pthread_mutex_unlock(&lock);
     }
