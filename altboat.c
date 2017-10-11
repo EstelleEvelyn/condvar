@@ -83,7 +83,7 @@ void* childThread(void* args) {
       }
     }
     while(boatLoc == MOLO || kidsOnBoard > 1) {
-      pthread_cond_wait(&kidsBoardOahu);
+      pthread_cond_wait(&kidsBoardOahu, &lock);
     }
     boardBoat(KID, OAHU);
     kidsOahu--;
@@ -133,7 +133,7 @@ void* adultThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
 
-  while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0 || lastCrossed == ADULT) {
+  while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0) {
     pthread_cond_wait(&adultBoardOahu, &lock);
   }
   boardBoat(ADULT, OAHU);
