@@ -59,7 +59,7 @@ void* childThread(void* args) {
         }
         boatCross(MOLO, OAHU);
         boatLoc = OAHU;
-        if(lastCrossed == ADULT) {
+        if(lastCrossed == KID) {
           leaveBoat(KID, OAHU);
           kidsOnBoard--;
           kidsOahu++;
