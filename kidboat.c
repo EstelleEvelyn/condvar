@@ -57,6 +57,8 @@ void* childThread(void* args) {
       if(kidsOahu == 0) {
         canBoard = 0;
       }
+      printf("%i", kidsOnBoard);
+      fflush(stdout);
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       boatLoc = OAHU;
@@ -66,6 +68,8 @@ void* childThread(void* args) {
     } else {
       boatCross(OAHU, MOLO);
       boatLoc = MOLO;
+      printf("%i", kidsOnBoard);
+      fflush(stdout);
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       pthread_cond_signal(&onBoat);
