@@ -68,6 +68,7 @@ void* childThread(void* args) {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
         pthread_cond_signal(&allDone);
+        pthread_mutex_unlock(&lock);
       }
     } else {
       boatCross(OAHU, MOLO);
@@ -81,11 +82,6 @@ void* childThread(void* args) {
     }
   }
 
-  // signals to wake main to check if everyone now across, you may choose to only do
-  // this in one of the adult or child threads, as long as eventually both Oahu counts
-  // go to 0 and you signal allDone somewhere!
-  pthread_cond_signal(&allDone);
-  pthread_mutex_unlock(&lock);
 
   return NULL;
 }
