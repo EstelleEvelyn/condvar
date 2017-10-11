@@ -44,18 +44,28 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
   while(kidsOahu != 0) {
-    while(boatLoc == MOLO || kidsOnBoard > 1 || canBoard == 0) {
+    while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    boardBoat(KID, OAHU);
-    kidsOahu--;
-    kidsOnBoard++;
+    if(kidsOahu > 0) {
+      boardBoat(KID, OAHU);
+      kidsOahu--;
+      kidsOnBoard++;
+    }
     if(kidsOnBoard == 1) {
+      if(kidsOahu == 0) {
+        boatCross(OAHU, MOLO);
+        boatLoc = MOLO;
+        printf("%i", kidsOnBoard);
+        fflush(stdout);
+        leaveBoat(KID, MOLO);
+        kidsOnBoard--;
+        pthread_cond_signal(&onBoat);
+        pthread_cond_signal(&allDone);
+        pthread_mutex_unlock(&lock);
+      }
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
-      }
-      if(kidsOahu == 0) {
-        canBoard = 0;
       }
       printf("%i", kidsOnBoard);
       fflush(stdout);
@@ -66,15 +76,13 @@ void* childThread(void* args) {
       pthread_cond_signal(&allDone);
       pthread_mutex_unlock(&lock);
     } else {
-      if(kidsOahu > 0) {
-        boatCross(OAHU, MOLO);
-        boatLoc = MOLO;
-        printf("%i", kidsOnBoard);
-        fflush(stdout);
-        leaveBoat(KID, MOLO);
-        kidsOnBoard--;
-        pthread_cond_signal(&onBoat);
-      }
+      boatCross(OAHU, MOLO);
+      boatLoc = MOLO;
+      printf("%i", kidsOnBoard);
+      fflush(stdout);
+      leaveBoat(KID, MOLO);
+      kidsOnBoard--;
+      pthread_cond_signal(&onBoat);
       pthread_mutex_unlock(&lock);
     }
   }
