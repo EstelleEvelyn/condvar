@@ -14,6 +14,7 @@ int boatLoc;
 int kidsOnBoard;
 int adultsOnBoard;
 int adultGoes;
+int canBoard;
 
 void init() {
   /* Initialize mutex and condition variable objects */
