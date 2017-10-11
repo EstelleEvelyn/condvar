@@ -128,7 +128,6 @@ void boatCross(int from, int to) {
  * 2nd argument is island boat is currently on - OAHU (real value 1) or MOLO (real value 2)
 */
 void leaveBoat(int person, int island) {
-  printf("%i, %i\n", kidsOahu, adultsOahu);
   char* pers;
   char* isl;
   if (person == ADULT) pers = "adult";
