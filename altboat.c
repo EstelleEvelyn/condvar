@@ -89,7 +89,7 @@ void* childThread(void* args) {
     kidsOahu--;
     kidsOnBoard++;
     if(kidsOnBoard == 1) {
-      while(boatLoc == OAHU){
+      while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
       }
       if (kidsOahu != 0) {
