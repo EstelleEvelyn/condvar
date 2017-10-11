@@ -59,9 +59,11 @@ void* childThread(void* args) {
         }
         boatCross(MOLO, OAHU);
         boatLoc = OAHU;
-        leaveBoat(KID, OAHU);
-        kidsOnBoard--;
-        kidsOahu++;
+        if(lastCrossed == ADULT) {
+          leaveBoat(KID, OAHU);
+          kidsOnBoard--;
+          kidsOahu++;
+        }
         pthread_cond_signal(&onOahu);
       } else {
         boatCross(OAHU, MOLO);
