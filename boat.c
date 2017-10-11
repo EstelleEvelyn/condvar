@@ -44,7 +44,7 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
   while(kidsOahu != 0) {
-    if(adultsOahu != 0) {
+    while(adultsOahu != 0) {
       while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || lastCrossed == KID) {
         pthread_cond_wait(&onOahu, &lock);
       }
