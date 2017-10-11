@@ -50,7 +50,8 @@ void* childThread(void* args) {
     kidsOnBoard++;
     if(kidsOnBoard == 1) {
       while(boatLoc == OAHU || kidsOnBoard == 2){
-      pthread_cond_wait(&onBoat, &lock);
+        pthread_cond_wait(&onBoat, &lock);
+      }
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       pthread_cond_signal(&allDone);
