@@ -103,12 +103,16 @@ void* childThread(void* args) {
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
+        printf("first exit");
+        fflush(stdout);
         pthread_cond_signal(&allDone);
       }
     } else {
       boatCross(OAHU, MOLO);
       boatLoc = MOLO;
       leaveBoat(KID, MOLO);
+      printf("second exit");
+      fflush(stdout);
       kidsOnBoard--;
       pthread_cond_signal(&onBoat);
       pthread_mutex_unlock(&lock);
