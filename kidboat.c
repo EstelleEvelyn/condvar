@@ -44,7 +44,7 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
   while(kidsOahu != 0) {
-    while(boatLoc == MOLO || kidsOnBoard > 1 || canBoard = 0) {
+    while(boatLoc == MOLO || kidsOnBoard > 1 || canBoard == 0) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
     boardBoat(KID, OAHU);
