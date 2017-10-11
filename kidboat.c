@@ -54,16 +54,15 @@ void* childThread(void* args) {
       }
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
+      boatLoc = OAHU;
       pthread_cond_signal(&kidsBoardOahu);
       pthread_cond_signal(&allDone);
       pthread_mutex_unlock(&lock);
     } else {
-      boatLoc = MOLO;
       boatCross(OAHU, MOLO);
       boatLoc = MOLO;
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
-      boatLoc = MOLO;
       pthread_cond_signal(&onBoat);
       pthread_mutex_unlock(&lock);
     }
