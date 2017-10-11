@@ -45,35 +45,16 @@ void* childThread(void* args) {
     while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    printf("I think you're on %i with at most 1 on board!\n", boatLoc );
-    fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOahu--;
     kidsOnBoard++;
-    printf("1current kids on board: %i\n", kidsOnBoard);
-    fflush(stdout);
     if(kidsOnBoard == 1) {
       while(boatLoc == OAHU || kidsOnBoard == 2){
-        pthread_cond_wait(&onBoat, &lock);
-      }
-      if (kidsOahu > 0) {
-        boatCross(MOLO, OAHU);
-        boatLoc = OAHU;
-        leaveBoat(KID, OAHU);
-        kidsOnBoard--;
-        printf("2current kids on board: %i\n", kidsOnBoard);
-        fflush(stdout);
-        kidsOahu++;
-        pthread_cond_signal(&kidsBoardOahu);
-        pthread_mutex_unlock(&lock);
-      } else {
-        printf("gonna leave now");
-        fflush(stdout);
-        leaveBoat(KID, MOLO);
-        kidsOnBoard--;
-        pthread_cond_signal(&allDone);
-        pthread_mutex_unlock(&lock);
-      }
+      pthread_cond_wait(&onBoat, &lock);
+      leaveBoat(KID, MOLO);
+      kidsOnBoard--;
+      pthread_cond_signal(&allDone);
+      pthread_mutex_unlock(&lock);
     } else {
       boatLoc = MOLO;
       boatCross(OAHU, MOLO);
@@ -81,8 +62,6 @@ void* childThread(void* args) {
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       boatLoc = MOLO;
-      printf("3current kids on board: %i\n", kidsOnBoard);
-      fflush(stdout);
       pthread_cond_signal(&onBoat);
       pthread_mutex_unlock(&lock);
     }
