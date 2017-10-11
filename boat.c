@@ -45,6 +45,8 @@ void* childThread(void* args) {
   }
   while(kidsOahu != 0) {
     if(adultsOahu != 0) {
+      printf("adults left");
+      fflush(stdout);
       while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || lastCrossed == KID) {
         pthread_cond_wait(&onOahu, &lock);
       }
@@ -81,6 +83,8 @@ void* childThread(void* args) {
         pthread_cond_signal(&onOahu);
       }
     } else {
+      printf("#noadults");
+      fflush(stdout);
       while(boatLoc == MOLO || kidsOnBoard > 2) {
         pthread_cond_wait(&onOahu, &lock);
       }
