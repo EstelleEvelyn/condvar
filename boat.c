@@ -83,31 +83,30 @@ void* childThread(void* args) {
         }
         pthread_cond_signal(&onOahu);
       }
-    } else {
-      while(boatLoc == MOLO || kidsOnBoard > 2) {
-        pthread_cond_wait(&onOahu, &lock);
+    }
+    while(boatLoc == MOLO || kidsOnBoard > 2) {
+      pthread_cond_wait(&onOahu, &lock);
+    }
+    boardBoat(KID, OAHU);
+    kidsOahu--;
+    kidsOnBoard++;
+    if(kidsOnBoard == 1) {
+      while(boatLoc == OAHU) {
+        pthread_cond_wait(&onBoat, &lock);
       }
-      boardBoat(KID, OAHU);
-      kidsOahu--;
-      kidsOnBoard++;
-      if(kidsOnBoard == 1) {
-        while(boatLoc == OAHU) {
-          pthread_cond_wait(&onBoat, &lock);
-        }
-        if(kidsOahu == 0) {
-          leaveBoat(KID, MOLO);
-          pthread_cond_signal(&allDone);
-        }
-        boatCross(MOLO, OAHU);
-        boatLoc = OAHU;
-        pthread_cond_signal(&onOahu);
-      } else {
-        boatCross(OAHU, MOLO);
-        boatLoc = MOLO;
+      if(kidsOahu == 0) {
         leaveBoat(KID, MOLO);
-        kidsOnBoard--;
-        pthread_cond_signal(&onBoat);
+        pthread_cond_signal(&allDone);
       }
+      boatCross(MOLO, OAHU);
+      boatLoc = OAHU;
+      pthread_cond_signal(&onOahu);
+    } else {
+      boatCross(OAHU, MOLO);
+      boatLoc = MOLO;
+      leaveBoat(KID, MOLO);
+      kidsOnBoard--;
+      pthread_cond_signal(&onBoat);
     }
   }
 
