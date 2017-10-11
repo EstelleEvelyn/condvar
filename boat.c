@@ -71,7 +71,7 @@ void* childThread(void* args) {
         kidsOnBoard--;
         pthread_cond_signal(&onBoat);
         if(adultsOahu != 0) {
-          printf("there are stil adler");
+          printf("there are stil adults");
           fflush(stdout);
           while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
               pthread_cond_wait(&onMolo, &lock);
