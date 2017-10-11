@@ -45,7 +45,7 @@ void* childThread(void* args) {
     while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    printf("I think you're on OAHU with at most 1 on board!\n" );
+    printf("I think you're on %i with at most 1 on board!\n", boatLoc );
     fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOahu--;
