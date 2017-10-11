@@ -91,10 +91,10 @@ void* childThread(void* args) {
     printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
     boardBoat(KID, OAHU);
-    printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
-    fflush(stdout);
     kidsOahu--;
     kidsOnBoard++;
+    printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
+    fflush(stdout);
     if(kidsOnBoard == 1) {
       if(kidsOahu == 0) {
       boatCross(OAHU, MOLO);
