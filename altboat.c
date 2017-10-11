@@ -51,8 +51,6 @@ void* childThread(void* args) {
         pthread_cond_wait(&kidsBoardOahu, &lock);
       }
       boardBoat(KID, OAHU);
-      printf("that one boarded from the adult loop");
-      fflush(stdout);
       kidsOnBoard++;
       kidsOahu--;
       if(kidsOnBoard == 1) {
@@ -90,7 +88,7 @@ void* childThread(void* args) {
     while(boatLoc == MOLO || kidsOnBoard > 1 || kidsOahu == 0) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    printf("Loc: %i, aboard: %i, island: %i", boatLoc, kidsOnBoard, kidsOahu);
+    printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOahu--;
