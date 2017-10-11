@@ -14,7 +14,6 @@ int boatLoc;
 int kidsOnBoard;
 int adultsOnBoard;
 int adultGoes;
-int nextBatch;
 
 void init() {
   /* Initialize mutex and condition variable objects */
@@ -30,7 +29,6 @@ void init() {
   kidsOnBoard = 0;
   adultsOnBoard = 0;
   adultGoes = 0;
-  nextBatch = 1;
 }
 
 void* childThread(void* args) {
@@ -44,7 +42,7 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
   while(kidsOahu != 0) {
-    while(boatLoc == MOLO || kidsOnBoard > 1 || nextBatch == 0) {
+    while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
     boardBoat(KID, OAHU);
@@ -53,7 +51,6 @@ void* childThread(void* args) {
     printf("current kids on board: %i\n", kidsOnBoard);
     fflush(stdout);
     if(kidsOnBoard == 1) {
-      nextBatch = 0;
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
       }
@@ -77,7 +74,6 @@ void* childThread(void* args) {
       boatLoc = MOLO;
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
-      nextBatch = 1;
       printf("current kids on board: %i\n", kidsOnBoard);
       fflush(stdout);
       pthread_cond_signal(&onBoat);
