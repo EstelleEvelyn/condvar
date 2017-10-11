@@ -70,13 +70,15 @@ void* childThread(void* args) {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
         pthread_cond_signal(&onBoat);
-        while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
-            pthread_cond_wait(&onMolo, &lock);
+        if(adultsOahu != 0) {
+          while (boatLoc == OAHU || lastCrossed == KID || adultsOnBoard != 0 || kidsOnBoard != 0) {
+              pthread_cond_wait(&onMolo, &lock);
+          }
+          boardBoat(KID, MOLO);
+          kidsOnBoard++;
+          boatCross(MOLO, OAHU);
+          boatLoc = OAHU;
         }
-        boardBoat(KID, MOLO);
-        kidsOnBoard++;
-        boatCross(MOLO, OAHU);
-        boatLoc = OAHU;
         pthread_cond_signal(&onOahu);
       }
     } else {
