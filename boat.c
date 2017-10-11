@@ -44,6 +44,8 @@ void* childThread(void* args) {
     pthread_cond_wait(&mayStart, &lock);
   }
   while(kidsOahu != 0) {
+    printf("aloop");
+    fflush(stdout);
     while (boatLoc == MOLO || kidsOnBoard == 2 || adultsOnBoard == 1 || (lastCrossed == KID && adultsOahu != 0)) {
       pthread_cond_wait(&onOahu, &lock);
     }
