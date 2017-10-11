@@ -17,6 +17,7 @@ pthread_cond_t onMolo;
 int boatLoc;
 int kidsOnBoard;
 int adultsOnBoard;
+int adultGoes;
 
 void init() {
   /* Initialize mutex and condition variable objects */
@@ -31,6 +32,7 @@ void init() {
   boatLoc = OAHU;
   kidsOnBoard = 0;
   adultsOnBoard = 0;
+  adultGoes = 0;
 }
 
 void* childThread(void* args) {
@@ -62,6 +64,7 @@ void* childThread(void* args) {
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
         kidsOahu++;
+        adultGoes = 1;
         pthread_cond_signal(&adultBoardOahu);
         pthread_mutex_unlock(&lock);
       } else {
@@ -141,11 +144,12 @@ void* adultThread(void* args) {
 
   printf("a grown up is gonna go");
   fflush(stdout);
-  while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0) {
+  while(boatLoc == MOLO || kidsOnBoard > 0 || adultsOnBoard > 0 || adultGoes == 0) {
     pthread_cond_wait(&adultBoardOahu, &lock);
   }
   boardBoat(ADULT, OAHU);
   adultsOnBoard++;
+  adultGoes = 0;
   adultsOahu--;
   boatCross(OAHU, MOLO);
   boatLoc = MOLO;
