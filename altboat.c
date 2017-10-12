@@ -81,6 +81,7 @@ void* childThread(void* args) {
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
         kidsOahu++;
+        printf("Loc: %i, Kids: %i, Adults: %i,AdGo: %i\n", boatLoc, kidsOnBoard, adultsOnBoard, adultGoes);
         pthread_cond_signal(&kidsBoardOahu);
         // pthread_mutex_unlock(&lock);
       }
@@ -105,7 +106,6 @@ void* childThread(void* args) {
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
-        fflush(stdout);
         // pthread_cond_signal(&allDone);
       }
       // pthread_mutex_unlock(&lock);
