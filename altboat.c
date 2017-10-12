@@ -91,7 +91,6 @@ void* childThread(void* args) {
     boardBoat(KID, OAHU);
     kidsOahu--;
     kidsOnBoard++;
-    fflush(stdout);
     if(kidsOnBoard == 1) {
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
