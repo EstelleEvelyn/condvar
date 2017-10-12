@@ -121,7 +121,7 @@ void* childThread(void* args) {
       pthread_mutex_unlock(&lock);
     }
   }
-  if(kidsOahu == 1) {
+  if(kidsOahu == 1 && boatLoc == OAHU) {
     printf("boarded here");
     fflush(stdout);
     boardBoat(KID, OAHU);
