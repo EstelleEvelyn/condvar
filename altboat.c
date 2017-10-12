@@ -58,7 +58,6 @@ void* childThread(void* args) {
           pthread_cond_wait(&onBoat, &lock);
         }
         boatCross(MOLO, OAHU);
-        fflush(stdout);
         boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
@@ -98,7 +97,6 @@ void* childThread(void* args) {
       }
       if(kidsOahu != 0) {
         boatCross(MOLO, OAHU);
-        fflush(stdout);
         boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
@@ -107,7 +105,6 @@ void* childThread(void* args) {
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
-        fflush(stdout);
         // pthread_cond_signal(&allDone);
       }
       // pthread_mutex_unlock(&lock);
