@@ -45,7 +45,7 @@ void* childThread(void* args) {
   while (!start) {
     pthread_cond_wait(&mayStart, &lock);
   }
-  while(kidsOahu != 0) {
+  while(kidsOahu > 1) {
     while(adultsOahu != 0) {
       while(boatLoc == MOLO || kidsOnBoard > 1 || adultsOnBoard > 0) {
         pthread_cond_wait(&kidsBoardOahu, &lock);
@@ -85,7 +85,7 @@ void* childThread(void* args) {
         pthread_mutex_unlock(&lock);
       }
     }
-    while(boatLoc == MOLO || kidsOnBoard > 1 || kidsOahu == 0) {
+    while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
     printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
@@ -96,13 +96,6 @@ void* childThread(void* args) {
     printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
     if(kidsOnBoard == 1) {
-      if(kidsOahu == 0) {
-      boatCross(OAHU, MOLO);
-      boatLoc = MOLO;
-      leaveBoat(KID, MOLO);
-      kidsOnBoard--;
-      pthread_cond_signal(&allDone);
-    } else {
       while(boatLoc == OAHU || kidsOnBoard == 2){
         pthread_cond_wait(&onBoat, &lock);
       }
@@ -119,7 +112,6 @@ void* childThread(void* args) {
         pthread_cond_signal(&allDone);
       }
       pthread_mutex_unlock(&lock);
-      }
     } else {
       boatCross(OAHU, MOLO);
       boatLoc = MOLO;
@@ -129,7 +121,13 @@ void* childThread(void* args) {
       pthread_mutex_unlock(&lock);
     }
   }
-
+  boardBoat(KID, OAHU);
+  kidsOnBoard++;
+  kidsOahu--;
+  boatCross(OAHU, MOLO);
+  boatLoc = MOLO;
+  leaveBoat(KID, MOLO);
+  kidsOnBoard--;
   // signals to wake main to check if everyone now across, you may choose to only do
   // this in one of the adult or child threads, as long as eventually both Oahu counts
   // go to 0 and you signal allDone somewhere!
