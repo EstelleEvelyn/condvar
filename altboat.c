@@ -119,15 +119,6 @@ void* childThread(void* args) {
       pthread_cond_signal(&onBoat);
     }
   }
-  if(kidsOahu == 1 && boatLoc == OAHU) {
-    boardBoat(KID, OAHU);
-    kidsOnBoard++;
-    kidsOahu--;
-    boatCross(OAHU, MOLO);
-    boatLoc = MOLO;
-    leaveBoat(KID, MOLO);
-    kidsOnBoard--;
-  }
   // signals to wake main to check if everyone now across, you may choose to only do
   // this in one of the adult or child threads, as long as eventually both Oahu counts
   // go to 0 and you signal allDone somewhere!
