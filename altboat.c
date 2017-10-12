@@ -106,7 +106,6 @@ void* childThread(void* args) {
         pthread_cond_signal(&kidsBoardOahu);
       } else {
         leaveBoat(KID, MOLO);
-        fflush(stdout);
         kidsOnBoard--;
         // pthread_cond_signal(&allDone);
       }
