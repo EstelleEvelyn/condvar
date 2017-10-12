@@ -77,12 +77,10 @@ void* childThread(void* args) {
         boardBoat(KID, MOLO);
         kidsOnBoard++;
         boatCross(MOLO, OAHU);
-        boatLoc == OAHU;
-        printf("Loc: %i, Kids: %i, Adults: %i,AdGo: %i\n", boatLoc, kidsOnBoard, adultsOnBoard, adultGoes);
+        boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
         kidsOahu++;
-        printf("Loc: %i, Kids: %i, Adults: %i,AdGo: %i\n", boatLoc, kidsOnBoard, adultsOnBoard, adultGoes);
         pthread_cond_signal(&kidsBoardOahu);
         // pthread_mutex_unlock(&lock);
       }
