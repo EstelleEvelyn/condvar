@@ -121,8 +121,6 @@ void* childThread(void* args) {
     }
   }
   if(kidsOahu == 1 && boatLoc == OAHU) {
-    printf("boarded here");
-    fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOnBoard++;
     kidsOahu--;
