@@ -107,9 +107,9 @@ void* childThread(void* args) {
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
-        pthread_cond_signal(&allDone);
+        // pthread_cond_signal(&allDone);
       }
-      pthread_mutex_unlock(&lock);
+      // pthread_mutex_unlock(&lock);
     } else {
       boatCross(OAHU, MOLO);
       boatLoc = MOLO;
