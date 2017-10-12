@@ -78,6 +78,7 @@ void* childThread(void* args) {
         kidsOnBoard++;
         boatCross(MOLO, OAHU);
         boatLoc == OAHU;
+        printf("Loc: %i, Kids: %i, Adults: %i,AdGo: %i\n", boatLoc, kidsOnBoard, adultsOnBoard, adultGoes);
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
         kidsOahu++;
