@@ -117,7 +117,6 @@ void* childThread(void* args) {
       leaveBoat(KID, MOLO);
       kidsOnBoard--;
       pthread_cond_signal(&onBoat);
-      pthread_mutex_unlock(&lock);
     }
   }
   if(kidsOahu == 1 && boatLoc == OAHU) {
