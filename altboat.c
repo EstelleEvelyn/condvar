@@ -121,15 +121,16 @@ void* childThread(void* args) {
       pthread_mutex_unlock(&lock);
     }
   }
-  printf("lots of kids are boarding here?\n");
-  fflush(stdout);
-  boardBoat(KID, OAHU);
-  kidsOnBoard++;
-  kidsOahu--;
-  boatCross(OAHU, MOLO);
-  boatLoc = MOLO;
-  leaveBoat(KID, MOLO);
-  kidsOnBoard--;
+  if(kidsOahu == 1) {
+    fflush(stdout);
+    boardBoat(KID, OAHU);
+    kidsOnBoard++;
+    kidsOahu--;
+    boatCross(OAHU, MOLO);
+    boatLoc = MOLO;
+    leaveBoat(KID, MOLO);
+    kidsOnBoard--;
+  }
   // signals to wake main to check if everyone now across, you may choose to only do
   // this in one of the adult or child threads, as long as eventually both Oahu counts
   // go to 0 and you signal allDone somewhere!
