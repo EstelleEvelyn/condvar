@@ -88,12 +88,10 @@ void* childThread(void* args) {
     while(boatLoc == MOLO || kidsOnBoard > 1) {
       pthread_cond_wait(&kidsBoardOahu, &lock);
     }
-    printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOahu--;
     kidsOnBoard++;
-    printf("Loc: %i, aboard: %i, island: %i\n", boatLoc, kidsOnBoard, kidsOahu);
     fflush(stdout);
     if(kidsOnBoard == 1) {
       while(boatLoc == OAHU || kidsOnBoard == 2){
