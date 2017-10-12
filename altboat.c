@@ -64,7 +64,7 @@ void* childThread(void* args) {
         kidsOahu++;
         adultGoes = 1;
         pthread_cond_signal(&adultBoardOahu);
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
       } else {
         boatCross(OAHU, MOLO);
         boatLoc = MOLO;
@@ -82,7 +82,7 @@ void* childThread(void* args) {
         kidsOnBoard--;
         kidsOahu++;
         pthread_cond_broadcast(&kidsBoardOahu);
-        pthread_mutex_unlock(&lock);
+        // pthread_mutex_unlock(&lock);
       }
     }
     while(boatLoc == MOLO || kidsOnBoard > 1) {
