@@ -58,6 +58,7 @@ void* childThread(void* args) {
           pthread_cond_wait(&onBoat, &lock);
         }
         boatCross(MOLO, OAHU);
+        fflush(stdout);
         boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
