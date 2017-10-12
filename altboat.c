@@ -99,6 +99,7 @@ void* childThread(void* args) {
       }
       if(kidsOahu != 0) {
         boatCross(MOLO, OAHU);
+        fflush(stdout);
         boatLoc = OAHU;
         leaveBoat(KID, OAHU);
         kidsOnBoard--;
