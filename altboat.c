@@ -121,6 +121,8 @@ void* childThread(void* args) {
       pthread_mutex_unlock(&lock);
     }
   }
+  printf("lots of kids are boarding here?\n");
+  fflush(stdout);
   boardBoat(KID, OAHU);
   kidsOnBoard++;
   kidsOahu--;
