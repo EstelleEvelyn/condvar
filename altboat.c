@@ -106,6 +106,7 @@ void* childThread(void* args) {
       } else {
         leaveBoat(KID, MOLO);
         kidsOnBoard--;
+        fflush(stdout);
         // pthread_cond_signal(&allDone);
       }
       // pthread_mutex_unlock(&lock);
