@@ -122,6 +122,7 @@ void* childThread(void* args) {
     }
   }
   if(kidsOahu == 1) {
+    printf("boarded here");
     fflush(stdout);
     boardBoat(KID, OAHU);
     kidsOnBoard++;
